@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 
 function Dashboard() {
   const [stats, setStats] = useState({
@@ -30,7 +31,7 @@ function Dashboard() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/dashboard/stats');
+      const response = await axios.get(`${API_BASE_URL}/api/dashboard/stats`);
       setStats(response.data || {
         totalContacts: 0,
         newContacts: 0,
