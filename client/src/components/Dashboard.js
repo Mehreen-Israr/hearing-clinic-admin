@@ -82,20 +82,6 @@ function Dashboard() {
       icon: 'icon-appointments',
       color: 'var(--success)',
       link: '/bookings'
-    },
-    {
-      title: 'Scheduled Today',
-      value: stats.pendingAppointments,
-      icon: 'icon-scheduled',
-      color: 'var(--warning)',
-      link: '/bookings'
-    },
-    {
-      title: 'Upcoming This Week',
-      value: stats.upcomingAppointments,
-      icon: 'icon-upcoming',
-      color: 'var(--primary)',
-      link: '/bookings'
     }
   ];
 
