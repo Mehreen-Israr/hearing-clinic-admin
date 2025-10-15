@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 
 function Contacts() {
   const [contacts, setContacts] = useState([]);
@@ -24,7 +25,7 @@ function Contacts() {
 
   const fetchContacts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/contacts');
+      const response = await axios.get(`${API_BASE_URL}/api/contacts`);
       setContacts(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error('Error fetching contacts:', error);
@@ -36,7 +37,7 @@ function Contacts() {
 
   const updateContactStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/contacts/${id}`, { status });
+      await axios.put(`${API_BASE_URL}/api/contacts/${id}`, { status });
       if (Array.isArray(contacts)) {
         setContacts(contacts.map(contact => 
           contact._id === id ? { ...contact, status } : contact

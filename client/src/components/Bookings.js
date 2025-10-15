@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../config/api';
 
 function Bookings() {
   const [appointments, setAppointments] = useState([]);
@@ -21,8 +22,8 @@ function Bookings() {
   const fetchData = async () => {
     try {
       const [appointmentsRes, surgerySlotsRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/appointments'),
-        axios.get('http://localhost:5000/api/surgery-slots')
+        axios.get(`${API_BASE_URL}/api/appointments`),
+        axios.get(`${API_BASE_URL}/api/surgery-slots`)
       ]);
       setAppointments(Array.isArray(appointmentsRes.data) ? appointmentsRes.data : []);
       setSurgerySlots(Array.isArray(surgerySlotsRes.data) ? surgerySlotsRes.data : []);
@@ -42,7 +43,7 @@ function Bookings() {
       const startTime = new Date(surgeryForm.startTime);
       const endTime = new Date(surgeryForm.endTime);
       
-      await axios.post('http://localhost:5000/api/surgery-slots', {
+      await axios.post(`${API_BASE_URL}/api/surgery-slots`, {
         title: surgeryForm.title,
         startTime: startTime,
         endTime: endTime,
@@ -60,7 +61,7 @@ function Bookings() {
   const deleteSurgerySlot = async (id) => {
     if (window.confirm('Are you sure you want to delete this surgery slot?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/surgery-slots/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/surgery-slots/${id}`);
         fetchData();
       } catch (error) {
         console.error('Error deleting surgery slot:', error);
@@ -70,7 +71,7 @@ function Bookings() {
 
   const updateAppointmentStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}`, { status });
+      await axios.put(`${API_BASE_URL}/api/appointments/${id}`, { status });
       if (Array.isArray(appointments)) {
         setAppointments(appointments.map(apt => 
           apt._id === id ? { ...apt, status } : apt
@@ -84,7 +85,7 @@ function Bookings() {
   const deleteAppointment = async (id) => {
     if (window.confirm('Are you sure you want to delete this appointment?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+        await axios.delete(`${API_BASE_URL}/api/appointments/${id}`);
         fetchData();
       } catch (error) {
         console.error('Error deleting appointment:', error);
